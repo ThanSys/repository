@@ -191,17 +191,59 @@ Please, choose in which network are you deploying: 2
 
 Se eligió testnet-david19 para hacer la prueba
 
-Siguió saliendo el mismo error de Java ):
-
-## tercer intento
-
-Se utilizo la versión de Oracle Java 11.0.13
 Funcionó con el JDK 11.0.13
 
 enode key
+
 ```shell
-TASK [lacchain-writer-node : print enode key] ************************************************************************************************
+TASK [lacchain-writer-node : print enode key] ************************************************************************************************ 
+ok: [148.202.23.22] => { 
+    "msg": "enode://a9865f676040a3b355b189449b49df4941c0769406edbbb04a46cc2ea51b696301a5869dff298b25e28790ef7317a5dc1a34cbeeb1886280cf7de483ed552326@148.202.23.22:60606" 
+}
+```
+
+## Iniciar el nodo
+
+En la máquina remota:
+```shell
+<remote_machine>$ sudo service pantheon start
+```
+
+Para reiniciar los servicios:
+```shell
+$ service pantheon restart
+```
+
+Obtener los permisos y después revisar si la conexión funcionó:
+```shell
+$ tail -100 /root/lacchain/logs/pantheon_info.log
+```
+
+## Después de obtener los permisos
+
+En la máquina remota:
+```shell
+<remote_machine>$ sudo service pantheon start
+<remote_machine>$ sudo service pantheon restart
+```
+
+Revisar la conexión:
+```shell
+$ sudo -i
+$ curl -X POST --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":1}' localhost:4545
+```
+
+```shell
+TASK [lacchain-writer-node : print enode key] **********************************
 ok: [148.202.23.22] => {
     "msg": "enode://a9865f676040a3b355b189449b49df4941c0769406edbbb04a46cc2ea51b696301a5869dff298b25e28790ef7317a5dc1a34cbeeb1886280cf7de483ed552326@148.202.23.22:60606"
+}
+```
+
+Nuevo enode:
+```shell
+TASK [lacchain-writer-node : print enode key] **********************************
+ok: [148.202.23.22] => {
+    "msg": "enode://ccbb8b05bf805e39c7ce4b86ae201a9e6428055a95b737f39e0b6d097fed70dd48e1623bb23a119e56b2db75c6f629b3d2898097a0c037dd39f99f5265a4ea10@148.202.23.22:60606"
 }
 ```
